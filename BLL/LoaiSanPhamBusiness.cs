@@ -38,7 +38,27 @@ namespace BLL
             }
             return lstChilds.OrderBy(s => s.seq_num).ToList();
         }
-        
+        public LoaiSanPhamModel GetDatabyID(string id)
+        {
+            return _res.GetDatabyID(id);
+        }
+        public bool Create(LoaiSanPhamModel model)
+        {
+            return _res.Create(model);
+        }
+        public bool Delete(string id)
+        {
+            return _res.Delete(id);
+        }
+        public bool Update(LoaiSanPhamModel model)
+        {
+            return _res.Update(model);
+        }
+        public List<LoaiSanPhamModel> Searchadmin(int pageIndex, int pageSize, out long total, string ten)
+        {
+            return _res.Searchadmin(pageIndex, pageSize, out total, ten);
+        }
+
     }
 
 }

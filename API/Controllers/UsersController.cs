@@ -106,7 +106,7 @@ namespace API.Controllers
                     SaveFileFromBase64String(savePath, arrData[2]);
                 }
             }
-            _userBusiness.Create(model);
+            _userBusiness.Update(model);
             return model;
         }
 
