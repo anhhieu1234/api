@@ -38,5 +38,81 @@ namespace DAL
                 throw ex;
             }
         }
+        public bool Delete(string id)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_hoadon_delete",
+                "@ma_hoa_don", id);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool Update(HoaDonModel model)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_hoadon_update",
+                "@ma_hoa_don", model.ma_hoa_don,
+                "@ho_ten", model.ho_ten,
+                "@dia_chi", model.dia_chi,
+                "@sodt", model.sodt,
+                "@email", model.email);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public HoaDonModel GetDatabyID(string id)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_hoadon_get_by_id",
+                     "@ma_hoa_don", id);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<HoaDonModel>().FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<HoaDonModel> Searchadmin(int pageIndex, int pageSize, out long total, string ten)
+        {
+            string msgError = "";
+            total = 0;
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_hoadon_admin_search",
+                    "@page_index", pageIndex,
+                    "@page_size", pageSize,
+                    "@ho_ten", ten);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
+                return dt.ConvertTo<HoaDonModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
