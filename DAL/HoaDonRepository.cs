@@ -114,5 +114,21 @@ namespace DAL
                 throw ex;
             }
         }
+        public List<ChiTietHoaDonModel> GetChitietbyhoadon(string id)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_get_chitiet_by_hoadon",
+                     "@ma_hoa_don", id);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<ChiTietHoaDonModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

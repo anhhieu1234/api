@@ -19,15 +19,15 @@ namespace API.Controllers
         {
             _hoaDonBusiness = hoaDonBusiness;
         }
-         
+
         [Route("create-hoadon")]
         [HttpPost]
-        public HoaDonModel CreateItem([FromBody] HoaDonModel model)
+        public HoaDonModel Create([FromBody] HoaDonModel model)
         {
             model.ma_hoa_don = Guid.NewGuid().ToString();
             if (model.listjson_chitiet != null)
             {
-                foreach(var item in model.listjson_chitiet)
+                foreach (var item in model.listjson_chitiet)
                     item.ma_chi_tiet = Guid.NewGuid().ToString();
             }
             _hoaDonBusiness.Create(model);
@@ -79,6 +79,13 @@ namespace API.Controllers
                 throw new Exception(ex.Message);
             }
             return response;
+        }
+        [Route("get-chi-tiet-by-hoa-don/{id}")]
+        [HttpGet]
+        public HoaDonModel GetCHitietByHoaDon(string id)
+        {
+            var kq= _hoaDonBusiness.GetChiTietByHoaDon(id);
+            return kq;
         }
     }
 }

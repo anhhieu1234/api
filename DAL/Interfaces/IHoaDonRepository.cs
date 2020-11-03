@@ -12,5 +12,6 @@ namespace DAL
         bool Delete(string id);
         HoaDonModel GetDatabyID(string id);
         List<HoaDonModel> Searchadmin(int pageIndex, int pageSize, out long total, string ten);
+        List<ChiTietHoaDonModel> GetChitietbyhoadon(string id);
     }
 }

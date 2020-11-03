@@ -17,6 +17,6 @@ namespace BLL
         List<SanPhamModel> Search(int pageIndex, int pageSize, out long total, string item_group_id);
         List<SanPhamModel> Searchadmin(int pageIndex, int pageSize, out long total, string ten, float gia);
 
-
+        
     }
 }
